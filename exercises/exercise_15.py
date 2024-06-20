@@ -1,25 +1,34 @@
 # Your solution to Exercise 15
-
-day = int(input("Enter the day: "))
-month = int(input("Enter the month: "))
-year = int(input("Enter the year: "))
-
-# Initialize output variable
-output = ""
-
-# Check for leap year
-is_leap_year = (year % 400 == 0) or (year % 100 != 0 and year % 4 == 0)
-
-# February and leap year logic
-if month == 2:
-    if is_leap_year and day == 29:
-        day = 1
-        month = 3
-    elif not is_leap_year and day == 28:
-        day = 1
-        month = 3
-    elif day < 28 or (is_leap_year and day < 29):
-        day += 1
+def is_leap_year(year):
+  if year % 4 == 0:
+    if year % 100 == 0:
+      if year % 400 == 0:
+        return True
+      else:
+        return False
+    else:
+      return True
+  else:
+    return False
+def get_next_date(day, month, year):
+  days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+  if is_leap_year(year):
+    days_in_month[1] = 29
+  if day == days_in_month[month - 1]:
+    day = 1
+    if month == 12:
+      month = 1
+      year += 1
+    else:
+      month += 1
+  else:
+    day += 1
+  return day, month, year
+day = int(input("Enter day: "))
+month = int(input("Enter month: "))
+year = int(input("Enter year: "))
+next_day, next_month, next_year = get_next_date(day, month, year)
+print(f"{next_day:02}.{next_month:02}.{next_year}")
     else:
         output = "Invalid date"
 
