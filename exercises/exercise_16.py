@@ -1,32 +1,22 @@
-# Your solution to Exercise 16
 
-day = int(input("Enter the day: "))
-month = int(input("Enter the month: "))
-year = int(input("Enter the year: "))
-
-# Determine if it's a leap year
-is_leap_year = (year % 400 == 0) or (year % 4 == 0 and year % 100 != 0)
-
-# Adjust for the previous day
-if day == 1:
+def get_previous_date(day, month, year):
+  days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+  if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0):
+    days_in_month[1] = 29
+  if day == 1:
     if month == 1:
-        day = 31
-        month = 12
-        year -= 1
-    elif month == 3:
-        day = 29 if is_leap_year else 28
-        month = 2
-    elif month == 5 or month == 7 or month == 10 or month == 12:
-        day = 30
-        month -= 1
-    elif month == 2 or month == 4 or month == 6 or month == 8 or month == 9 or month == 11:
-        day = 31
-        month -= 1
-else:
+      month = 12
+      year -= 1
+      day = days_in_month[month - 1]
+    else:
+      month -= 1
+      day = days_in_month[month - 1]
+  else:
     day -= 1
+  return day, month, year
+day = int(input("Enter day: "))
+month = int(input("Enter month: "))
+year = int(input("Enter year: "))
+previous_day, previous_month, previous_year = get_previous_date(day, month, year)
 
-# Prepare the output message
-output = f"{day:02d}.{month:02d}.{year}"
-
-# Output the previous day's date
-print(output)
+print(f"{previous_day:02}.{previous_month:02}.{previous_year}")
